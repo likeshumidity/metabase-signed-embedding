@@ -4,13 +4,12 @@ import * as jose from 'jose'
 import { useState, useEffect } from 'react'
 
 // import.meta.env variables come from .env file
-const METABASE_SITE_URL = import.meta.env.METABASE_SITE_URL
-const METABASE_SECRET_KEY = import.meta.env.METABASE_SECRET_KEY
+const METABASE_SITE_URL = import.meta.env.VITE_METABASE_SITE_URL
+const METABASE_SECRET_KEY = import.meta.env.VITE_METABASE_SECRET_KEY
 const RESOURCE = {}
-RESOURCE[import.meta.env.RESOURCE_TYPE] = import.meta.env.RESOURCE_ID
+RESOURCE[import.meta.env.VITE_RESOURCE_TYPE] = Number.parseInt(import.meta.env.VITE_RESOURCE_ID)
 
-const createToken = async ({ resource }) => {
-  // resource should be either { dashboard: 123 } if dashboard 123 or { question: 123 } if question 123
+const createToken = async (resource) => {
 	const payload = {
 		resource,
 		params: {}
@@ -43,7 +42,6 @@ const App = () => {
   useEffect(() => {
     createIframeUrl(RESOURCE)
       .then(url => {
-        console.log(url)
         setIframeUrl(url)
       })
   })
